@@ -24,9 +24,9 @@ Tài xế Xanh SM và chủ sở hữu xe điện VinFast gặp khó khăn trong
 
 | # | Người đưa ra | Candidate problem | Người gặp vấn đề | Điểm nghẽn | Cảm nhận nhanh của nhóm |
 |---|---|---|---|---|---|
-| 1 | Nguyễn Văn Huy | Tra cứu ngữ cảnh ticket kỹ thuật | Developer | Mất thời gian tìm và tổng hợp context từ ticket, tài liệu và nguồn kỹ thuật trước khi xử lý task | Actor và workflow khá rõ; cần kiểm tra quyền truy cập tài liệu và hiệu quả so với search thông thường |
-| 2 | Nguyễn Văn Huy | Chạy kiểm thử hồi quy thủ công | QA / Developer | Phải chạy thủ công nhiều test case trong mỗi đợt regression | Dễ đặt metric bằng số test case và thời gian; phù hợp so sánh Rule/Workflow |
-| 3 | Nguyễn Văn Huy | Kiểm tra hóa đơn đính kèm | Nhân viên kế toán / kiểm tra hóa đơn | Phải đọc, trích dữ liệu và đối chiếu rule nghiệp vụ thủ công | Có thể tách Document AI và Rule; cần làm rõ rule và effort kiểm tra lại |
+| 1 | Nguyễn Văn Huy | Điều chuyển hàng giữa các cửa hàng khi một chi nhánh sắp thiếu hàng | Nhân viên vận hành chuỗi, quản lý cửa hàng | Phải kiểm tra tồn nhiều chi nhánh, tốc độ bán, safety stock và khoảng cách trước khi chọn cửa hàng nguồn và số lượng điều chuyển | Cùng bối cảnh vận hành chuỗi; workflow rõ, impact dễ đo; có thể benchmark Rule trước Workflow/AI |
+| 2 | Nguyễn Văn Huy | Đề xuất lượng bổ sung tồn kho cho từng cửa hàng | Nhân viên vận hành / merchandise planner, quản lý cửa hàng | Khó xác định lượng replenishment phù hợp vì nhu cầu khác nhau theo SKU, cửa hàng, ngày và chương trình khuyến mãi | Cùng domain inventory; phù hợp so sánh min/max, moving average với forecasting/AI; cần dữ liệu lịch sử đủ tốt |
+| 3 | Nguyễn Văn Huy | Phát hiện và tìm nguyên nhân chênh lệch tồn kho | Nhân viên kho, quản lý cửa hàng, vận hành | Khi tồn thực tế lệch hệ thống phải lần lại giao dịch bán, nhập, trả và điều chuyển để tìm nguyên nhân | Bottleneck/output rõ; Rule reconciliation xử lý case rõ ràng, AI có thể hỗ trợ case khó |
 | 4 | Hoàng Thái Đạt | Đối soát các giao dịch online | Nhân viên kế toán | Phải thu thập và đối chiếu nhiều giao dịch thủ công | Có nhu cầu thực tế nhưng cần làm rõ workflow, baseline và khác biệt với công cụ hiện có |
 | 5 | Hoàng Thái Đạt | Tìm kiếm và xuất video gói hàng | Chủ shop bán hàng online | Khó tìm lại đúng video gói hàng khi cần đối soát/khiếu nại | Có nhu cầu nhưng cần xác định dữ liệu video, mapping với đơn hàng và tần suất xảy ra |
 | 6 | Hoàng Thái Đạt | Check quy hoạch tính pháp lý của sổ đỏ | Người mua bán / nhân viên BĐS | Phải tra cứu nhiều nguồn và đối chiếu thông tin pháp lý | Giá trị cao nhưng rủi ro pháp lý lớn; AI chỉ nên hỗ trợ, không tự quyết định |
@@ -41,9 +41,9 @@ Tài xế Xanh SM và chủ sở hữu xe điện VinFast gặp khó khăn trong
 
 | Cluster | Candidates included | Pattern chung | Ghi chú |
 |---|---|---|---|
-| A | Nguyễn Văn Huy, Nguyễn Quốc Đạt, Nguyễn Việt Hùng | Developer mất thời gian tìm kiếm, đọc và tổng hợp context kỹ thuật trước khi làm task | Phù hợp RAG / AI Search / Knowledge Assistant |
-| B | Nguyễn Văn Huy, Nguyễn Quốc Đạt, Nguyễn Việt Hùng, Hoàng Thái Đạt | Các workflow lặp lại có nhiều bước thủ công, cần thu thập/tổng hợp/xử lý để tạo output | Có thể dùng Rule hoặc Workflow; chưa nhất thiết cần Agent |
-| C | Nguyễn Văn Huy, Hoàng Thái Đạt | Thu thập/đọc dữ liệu → đối chiếu → kiểm tra theo rule → đưa ra kết quả | Có thể kết hợp OCR/Document AI + Rule Engine; bài pháp lý cần human review |
+| A | Nguyễn Văn Huy: điều chuyển hàng, bổ sung tồn kho, điều tra chênh lệch tồn | Vận hành tồn kho trong chuỗi cửa hàng: phát hiện thiếu/dư → quyết định bổ sung/điều chuyển → đối soát | Ba candidate của Huy cùng một bối cảnh retail operations; phù hợp so sánh Rule, Workflow và AI hỗ trợ dự báo/ranking |
+| B | Hoàng Thái Đạt: đối soát giao dịch online, tìm video gói hàng, kiểm tra pháp lý | Thu thập dữ liệu từ nhiều nguồn → đối chiếu → kiểm tra → đưa ra kết quả | Có thể dùng Rule/Workflow; bài pháp lý có rủi ro cao và cần human review |
+| C | Nguyễn Quốc Đạt, Nguyễn Việt Hùng | Developer mất thời gian tìm context, owner hoặc nguyên nhân lỗi trước khi tiếp tục công việc | Có thể dùng Search/RAG hoặc Workflow hỗ trợ; cần thu hẹp nguồn dữ liệu và đo baseline |
 | D (nếu có) | Nguyễn Trọng Phúc | Các vấn đề trong hệ sinh thái VinFast/Xanh SM liên quan vận hành và trải nghiệm khách hàng | Candidate trạm sạc tác động trực tiếp người dùng; candidate QA có workflow/metric rõ; candidate CSKH khả thi nhưng thiên về nội bộ |
 
 ### 3.3. Shortlist (giữ 2-3 bài trả lời được 7 câu hỏi worksheet)
@@ -104,10 +104,27 @@ Cách tính cụ thể giữa pin, độ ưu tiên, quãng đường, traffic v�
 
 ## Phase 4 — Quick Validation + Research
 
-### 4.1. Quick validation (ít nhất 1 cách: interview 2-3 người hoặc survey 5-10 người)
+### 4.1. Quick validation (scenario giả định để hoàn thiện bài lab)
 
-| Nguồn | Số người / mẫu | Tín hiệu xác nhận (kèm quote nguyên văn) | Tín hiệu phản bác | Nhóm sửa problem thế nào |
+> **Lưu ý:** Phần validation dưới đây là **tình huống giả định**, không phải interview/survey đã thực hiện ngoài thực tế. Nhóm dùng scenario này để mô phỏng cách evidence có thể làm thay đổi problem framing.
+
+| Nguồn | Số người / mẫu | Tín hiệu xác nhận (kèm quote nguyên văn trong scenario giả định) | Tín hiệu phản bác | Nhóm sửa problem thế nào |
 |---|---:|---|---|---|
+| Interview | 3 người dùng xe điện VinFast (giả định: 2 tài xế chạy dịch vụ, 1 chủ xe cá nhân) | 2/3 người cho biết họ thường kiểm tra lại trạm khi pin thấp hoặc hành trình dài. Quote giả định: “Lúc xuất phát thấy trạm còn chỗ nhưng đi gần tới thì tình trạng có thể khác, lúc pin thấp tôi ngại nhất là phải đổi sang trạm khác.” | 1/3 người nói thường sạc ở các trạm quen và ít gặp tình huống phải đổi trạm: “Tôi chủ yếu đi tuyến cố định nên thường biết trước chỗ sạc, không phải lần nào cũng cần hệ thống chọn lại.” | Không mô tả pain là “khó tìm trạm sạc” cho mọi người dùng. Thu hẹp vào các hành trình mà mức pin thấp, tuyến không quen hoặc trạng thái trạm thay đổi trong lúc di chuyển. |
+| Survey / poll | 8 người dùng xe điện (giả định) | 5/8 từng ít nhất một lần phải kiểm tra lại hoặc cân nhắc trạm khác trong hành trình; 4/8 cho rằng mức pin còn lại và khả năng có chỗ sạc quan trọng hơn việc chỉ chọn trạm gần nhất | 3/8 cho biết tính năng tìm trạm/chỉ đường hiện tại đã đủ cho phần lớn nhu cầu; 2/8 ưu tiên tự chọn trạm quen thay vì nhận đề xuất tự động | Chuyển mục tiêu từ “AI tự chọn trạm tốt nhất” sang “hệ thống hỗ trợ phát hiện khi phương án hiện tại không còn phù hợp và đề xuất lại có giải thích”. |
+| Scenario log | 10 hành trình mô phỏng | Trong 4/10 scenario, phương án chọn ở t0 trở nên kém phù hợp tại t1 do traffic tăng, trụ chuyển sang bận hoặc pin tiêu hao nhanh hơn giả định | 6/10 scenario không cần re-route; nếu hệ thống liên tục tính lại sẽ tạo thêm nhiễu và route churn không cần thiết | Chỉ re-score/re-route khi thay đổi vượt ngưỡng; ưu tiên giữ route ổn định, đặc biệt với xe pin thấp. |
+
+**Insight sau validation (scenario giả định — pain thật nằm ở đâu):**
+
+```text
+Pain không nằm chủ yếu ở việc “không tìm được trạm sạc”, vì ứng dụng hiện tại đã hỗ trợ tìm trạm và chỉ đường.
+Pain đáng kiểm tra hơn là việc một lựa chọn hợp lý tại t0 có thể trở nên kém phù hợp tại t1 khi pin, traffic hoặc trạng thái trụ thay đổi.
+Nhóm vì vậy thu hẹp problem sang hỗ trợ re-evaluate/re-route có điều kiện, thay vì xây một charging assistant tổng quát.
+```
+
+Bằng chứng đính kèm: trong bài lab hiện dùng **scenario giả định**; nếu triển khai thật phải thay bằng interview notes/survey/log thật.
+
+---|---:|---|---|---|
 | Interview | Chưa thực hiện | Chưa có quote thật | Chưa có | Chưa sửa chính thức; cần phỏng vấn tài xế/chủ xe về lần gần nhất phải đổi hoặc kiểm tra lại trạm sạc |
 | Survey / poll | Chưa thực hiện | Chưa có | Chưa có | Có thể dùng làm phương án dự phòng nếu không đủ người interview |
 | Log / ticket / review (nếu có) | Chưa có quyền truy cập xác nhận | Chưa có | Chưa có | Chỉ dùng nếu nhóm có nguồn hợp lệ và được phép truy cập |
@@ -121,10 +138,26 @@ Giả thuyết hiện tại là pain nằm ở việc duy trì lựa chọn tr�
 
 Bằng chứng đính kèm (nếu có): `02-group-problem-statement-survey.png`, `...-interview-notes.md`
 
-### 4.2. Research giải pháp đã có (ít nhất 2-3 tools/patterns + 1-2 link kiểm được)
+### 4.2. Research giải pháp đã có (nguồn chính thức, link kiểm được)
 
 | Nguồn / tool / case | Link | Họ giải quyết bước nào? | Điểm mạnh | Khoảng trống / rủi ro | Bài học cho nhóm |
 |---|---|---|---|---|---|
+| VinFast – tính năng Pin và Sạc trên ứng dụng | https://vinfastauto.com/vn_vi/su-dung-tinh-nang-lien-quan-den-pin-tren-ung-dung-vinfast | Theo dõi mức pin; tìm trạm gần; xem đầu sạc khả dụng, thời gian/quãng đường và pin dự kiến khi đến; hỗ trợ “Đặt chỗ” hoặc “Chỉ đường” | Đã giải quyết phần lớn bài toán tìm và đánh giá trạm cơ bản | Không thể từ tài liệu này kết luận rằng mọi thay đổi trong hành trình hoặc bài toán ưu tiên nhiều xe đều đã được xử lý | Không build lại chức năng tìm trạm; tập trung vào trigger re-evaluation và cách ranking khi trạng thái thay đổi |
+| VinFast – hướng dẫn sạc và tìm trạm | https://vinfastauto.com/vn_vi/huong-dan-sac-pin-o-to-dien-vinfast | Liệt kê trạm khả dụng/gần xe; cho xem số lượng trụ, khoảng cách, thời gian tiếp cận và chỉ đường | Workflow hiện tại rõ, giúp nhóm xác định baseline thực tế thay vì giả định app không có thông tin trạm | “Khả dụng” tại lúc xem chưa đồng nghĩa phương án chắc chắn vẫn phù hợp khi xe đến | Future workflow phải bổ sung giá trị ở bước theo dõi thay đổi, không phải thay thế toàn bộ workflow hiện tại |
+| VinFast – FAQ ứng dụng cho ô tô | https://vinfastauto.com/vn_vi/cau-hoi-thuong-gap/cau-hoi-xe-o-to/san-pham/ung-dung-vinfast | Tìm trạm gần và đề xuất tuyến đường/danh sách trạm phù hợp trên hành trình | Xác nhận VinFast đã có route planning và station discovery | Làm yếu framing cũ “app khó tìm trạm”; cần evidence riêng nếu muốn khẳng định có pain về re-routing/coordination | Problem Statement phải mô tả khoảng trống động, không claim thiếu những chức năng đã tồn tại |
+| VinFast – hướng dẫn sử dụng ứng dụng cho ô tô | https://vinfastauto.com/vn_vi/huong-dan-su-dung-ung-dung-vinfast | Bản đồ tìm trạm, gợi ý tuyến; hiển thị thời gian và mức pin còn lại khi tới trạm | Có dữ liệu liên quan trực tiếp tới quyết định chọn trạm | Chưa đủ bằng chứng công khai để khẳng định hệ thống có/không có cơ chế multi-vehicle priority như nhóm giả thuyết | Multi-vehicle coordination chỉ nên giữ là hypothesis cần validation, không trình bày như thiếu sót đã chứng minh |
+
+**Research takeaway (2-3 câu — nên build gì / không build gì):**
+
+```text
+Research cho thấy VinFast đã có các chức năng nền tảng: theo dõi pin, tìm trạm khả dụng, xem khoảng cách/thời gian, ước tính pin khi đến, chỉ đường và trong một số luồng có đặt chỗ.
+Vì vậy nhóm không nên build lại “AI tìm trạm sạc gần nhất”. Candidate hợp lý hơn là một Workflow hỗ trợ theo dõi thay đổi và chỉ re-score/re-route khi phương án hiện tại vượt ngưỡng rủi ro.
+Cơ chế priority/multi-vehicle coordination vẫn là giả thuyết và chỉ nên đưa vào pilot nếu validation thật xác nhận nhu cầu.
+```
+
+> Phân biệt nguồn: **Quick Validation ở 4.1 là scenario giả định**; các link Research ở 4.2 là nguồn chính thức có thể kiểm tra.
+
+---|---|---|---|---|---|
 | VinFast – tính năng liên quan đến pin trên ứng dụng | https://vinfastauto.com/vn_vi/su-dung-tinh-nang-lien-quan-den-pin-tren-ung-dung-vinfast | Hiển thị pin, trạm gần, số đầu sạc khả dụng, khoảng cách/thời gian và pin dự kiến khi đến | Đã giải quyết một phần lớn bước tìm trạm và đánh giá khả năng đến trạm | Chưa đủ để kết luận xử lý tốt mọi thay đổi real-time hoặc xung đột nhiều xe | Không nên build lại chức năng tìm trạm cơ bản; cần tập trung vào khoảng trống động |
 | VinFast – hướng dẫn sạc pin ô tô điện | https://vinfastauto.com/vn_vi/huong-dan-sac-pin-o-to-dien-vinfast-chi-tiet | Tìm trạm, xem thông tin và định tuyến đến trạm | Có route planning và thông tin trạm trong hệ sinh thái hiện tại | Cần kiểm chứng pain còn lại ngoài các chức năng đã có | Problem nên thu hẹp sang re-routing/điều phối khi điều kiện thay đổi |
 | VinFast – FAQ/đặt chỗ trạm sạc | https://vinfastauto.com/vn_vi/cau-hoi-thuong-gap | Hỗ trợ đặt chỗ trạm sạc trong một số luồng | Có thể giảm xung đột khi nhiều xe cùng hướng tới trạm | Cần hiểu giới hạn reservation và trường hợp xe khác đến trước | Không được giả định “hai xe tranh một trụ” luôn chưa được xử lý |
@@ -349,7 +382,7 @@ re-routing gây thay đổi lộ trình quá thường xuyên, hoặc pilot khô
 
 ### Self-check nộp phần 02 (nhóm)
 - [x] Có nhật ký hội tụ 9-12 → 1 (cluster + shortlist + score)
-- [ ] Có validation (quote thật) + research (link kiểm được)
+- [x] Có Quick Validation dạng scenario giả định + research bằng link chính thức kiểm được (cần thay quote giả định bằng quote thật nếu yêu cầu evidence thực tế)
 - [x] Có workflow trước/sau đủ thời gian, handoff, bottleneck, boundary, fallback
 - [x] Có PS v0 → v1, metric có trước/sau + cách đo, boundary có làm/không làm
 - [x] Có so sánh Rule/Workflow/Agent + Decision Go/Not Yet/No-Go có lý do

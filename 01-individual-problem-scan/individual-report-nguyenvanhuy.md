@@ -1,303 +1,438 @@
-# 01 — Individual Problem Scan
+# 01 --- Individual Problem Scan
 
-> Điền theo Phase 1 + Phase 2 trong `01-worksheet.md`. Tự scan trước, dùng AI sau để phản biện. Không copy ví dụ Weekly Report.
+> Điền theo Phase 1 + Phase 2 trong `01-worksheet.md`. Tự scan trước,
+> dùng AI sau để phản biện. Không bắt đầu từ ý tưởng AI; bắt đầu từ
+> actor, workflow và pain.
 
 ## Thông tin cá nhân
 
-- Họ và tên: Nguyễn Văn Huy
-- Mã học viên: 2A202602428
-- Vai trò / bối cảnh: Sinh viên năm cuối ngành công nghệ thông tin Trường Đại học Bách khoa - Đại học Đà Nẵng/ Software Engineer 
-- Công việc hằng tuần (3-5 gạch đầu dòng để soi problem):
+-   **Họ và tên:** Nguyễn Văn Huy
+-   **Mã học viên:** 2A202602428
+-   **Bối cảnh giả định:** Nhân viên vận hành tại một chuỗi bán lẻ gồm
+    10 cửa hàng.
+-   **Công việc chính:** Theo dõi doanh số và tồn kho; xử lý thiếu hàng;
+    phối hợp điều chuyển giữa các chi nhánh; kiểm tra chênh lệch tồn;
+    tổng hợp báo cáo vận hành.
 
----
+> **Lưu ý về dữ liệu:** Bài scan sử dụng một tình huống giả định thống
+> nhất để thực hành Day 02. Các con số về thời gian/tần suất bên dưới là
+> baseline giả định ban đầu và cần được thay bằng số đo hoặc validation
+> thật nếu dùng để ra quyết định triển khai.
 
-## Phase 1 — Scan rộng
+------------------------------------------------------------------------
 
-Scan 8 problems trong công việc, vượt mức tối thiểu 5.
+## Phase 1 --- Scan rộng
 
-> Các vấn đề và dấu hiệu dưới đây được tổng hợp từ case study công khai, không phải số đo hay trải nghiệm trực tiếp của học viên. Link nguồn đặt tại từng dòng; ngày tra cứu: 12/09/2026.
+Scan 8 problems trong **cùng một bối cảnh chuỗi cửa hàng bán lẻ**.
 
-| # | Lăng kính | Problem quan sát được | Ai chịu ảnh hưởng? | Dấu hiệu thật |
-|---|---|---|---|---|
-| 1 | Tốn thời gian | Chạy thủ công bộ kiểm thử hồi quy mất nhiều thời gian, làm chậm việc kiểm tra sản phẩm | Nhóm QA tại SafelyYou | Khoảng 362 test case; chạy thủ công một bộ regression mất 1 tuần. [Nguồn](https://testrigor.com/case-study-safelyyou/) |
-| 2 | AI có thể tốt hơn | Nhân viên hỗ trợ phải tìm và đối chiếu tài liệu ở nhiều nơi trước khi trả lời ticket kỹ thuật | Nhân viên hỗ trợ kỹ thuật tại ClickUp | Khoảng 15 phút tra cứu/ticket, với khoảng 5.000 ticket/tháng. [Nguồn](https://zapier.com/customer-stories/clickup) |
-| 3 | Tốn thời gian | Khó tìm hóa đơn tương ứng với khoản tiền khách hàng thanh toán để đối chiếu và xử lý trong SAP | Nhân viên kế toán khoản phải thu tại EY | Các khoản cần xử lý thủ công mất 7–30 phút tra cứu/khoản, thêm 4–25 phút xử lý trong SAP/khoản. [Nguồn](https://learn.microsoft.com/en-us/power-platform/guidance/case-studies/global-finance) |
-| 4 | Lặp lại | Nhập và viết tóm tắt thông tin từng ứng viên bằng tay | Nhân viên tuyển dụng tại JBGoodwin REALTORS | Viết tóm tắt mất 5–10 phút/người; nhập dữ liệu thủ công chiếm tới 25% thời gian của recruiter. [Nguồn](https://zapier.com/customer-stories/JBGoodwin-REALTORS) |
-| 5 | Lặp lại | Đọc và kiểm tra thủ công từng hóa đơn đính kèm để đối chiếu với đơn mua hàng | Nhân viên kế toán phải trả tại CATRION | Kiểm tra mỗi hóa đơn đính kèm mất ít nhất 3 phút. [Nguồn](https://www.microsoft.com/en/customers/story/24577-catrion-microsoft-power-platform) |
-| 6 | Pain từ người khác | Dữ liệu nhân viên mới phải cập nhật lại ở nhiều bảng, gây sai lệch thông tin lương và onboarding | Kathy Lam, phụ trách vận hành tuyển dụng tại StackAdapt, và 5 nhóm nhận dữ liệu | Mỗi nhân viên mới cần hàng chục cập nhật thủ công; dữ liệu phân tán qua Finance, People Ops, Comp, Payroll và FP&A. [Nguồn](https://zapier.com/blog/stackadapt-automates-hiring-with-zapier/) |
-| 7 | Pain từ người khác | Quản lý cửa hàng mất công lập và chỉnh lịch ca bằng Excel, dễ hỏng công thức khi thay đổi | Quản lý cửa hàng tại Mud Bay | Trung bình 2–3 giờ/quản lý để soạn và công bố lịch; tổng 120–180 giờ ở 60 địa điểm. [Nguồn](https://www.deputy.com/customers/mud-bay) |
-| 8 | Lặp lại | Đối soát nhiều tài khoản ngân hàng và xử lý các tác vụ ngân quỹ hằng tuần tốn thời gian | Nhân sự cấp cao phụ trách ngân quỹ tại L&M Fleet Supply | Các tác vụ ngân quỹ hằng tuần chiếm tới một ngày làm việc; bối cảnh có 25 tài khoản ngân hàng cần đối soát. [Nguồn](https://www.microsoft.com/en/customers/story/25084-l-and-m-fleet-supply-dynamics-365-commerce) |
+  --------------------------------------------------------------------------
+  \#             Lăng kính      Problem quan   Ai chịu ảnh    Dấu hiệu thật
+                                sát được       hưởng?         / baseline giả
+                                                              định
+  -------------- -------------- -------------- -------------- --------------
+  1              Lặp lại        Cuối ngày phải Nhân viên vận  Mỗi ngày phải
+                                tổng hợp doanh hành, quản lý  gom dữ liệu từ
+                                thu, số đơn và vùng           10 cửa hàng;
+                                tồn kho từ                    giả định mất
+                                nhiều cửa hàng                khoảng 30--45
+                                để làm báo cáo                phút/ngày
+                                vận hành                      
 
----
+  2              Tốn thời gian  Khi một cửa    Nhân viên vận  Một yêu cầu
+                                hàng sắp hết   hành, quản lý  phải kiểm tra
+                                hàng, nhân     cửa hàng,      nhiều cửa hàng
+                                viên phải kiểm khách mua      rồi liên hệ
+                                tra tồn kho                   xác nhận; giả
+                                nhiều chi                     định 15--20
+                                nhánh để tìm                  phút/lần
+                                nơi có thể                    
+                                điều chuyển                   
 
-## Phase 2 — Top 3 Problem Cards
+  3              AI có thể tốt  Khó quyết định Nhân viên vận  Cùng SKU có
+                 hơn            nên bổ sung    hành, quản lý  thể bán nhanh
+                                bao nhiêu hàng cửa hàng       ở cửa hàng A
+                                cho từng cửa                  nhưng chậm ở
+                                hàng vì tốc độ                B; quyết định
+                                bán khác nhau                 thường dựa
+                                theo cửa hàng,                nhiều vào kinh
+                                ngày và chương                nghiệm
+                                trình khuyến                  
+                                mãi                           
 
-> Các card dựa trên nguồn công khai của Phase 1. Actor, workflow chi tiết và bottleneck được diễn giải để làm bài; cần xác minh với người dùng. Success metric và future workflow là **đề xuất chưa thử nghiệm**, không phải kết quả đã đạt. Số đo của doanh nghiệp không phải số đo của học viên.
+  4              Lặp lại        Phải đối chiếu Nhân viên kho, Giả định mất
+                                tồn kho trên   quản lý cửa    20--30
+                                hệ thống với   hàng, vận hành phút/case để
+                                kiểm kê thực                  kiểm tra nhập,
+                                tế rồi lần lại                bán, trả hàng
+                                giao dịch khi                 và điều chuyển
+                                có chênh lệch                 
 
-### 2.1. Chọn top 3
+  5              Pain từ người  Nhân viên cửa  Nhân viên bán  Cùng câu hỏi
+                 khác           hàng phải hỏi  hàng, quản lý  có thể được
+                                lại chính sách cửa hàng,      hỏi lại ở
+                                khuyến mãi/đổi khách hàng     nhiều chi
+                                trả vì thông                  nhánh; dễ áp
+                                tin nằm ở                     dụng nhầm
+                                nhiều thông                   phiên bản
+                                báo hoặc tài                  chính sách
+                                liệu                          
 
-| Rank | Problem (từ bảng scan) | Vì sao chọn | Điều còn chưa chắc |
-|---|---|---|---|
-| 1 | #2 — Tra cứu ngữ cảnh ticket kỹ thuật | Actor rõ; có thời gian tra cứu/ticket; gần bối cảnh phần mềm và có thể thu hẹp vào một bộ tài liệu | Có tiếp cận được ticket/tài liệu không? Người nào kiểm tra độ đúng? Tìm kiếm từ khóa đã đủ chưa? |
-| 2 | #1 — Chạy kiểm thử hồi quy thủ công | Gần bối cảnh Software Engineer; có bộ test và kết quả mong đợi để đánh giá; so sánh được Rule với AI | Thời gian chủ yếu ở chạy test hay bảo trì? Có ứng dụng demo và dữ liệu chạy lại được không? |
-| 3 | #5 — Kiểm tra hóa đơn đính kèm | Actor và đơn vị đo rõ; dễ giới hạn vào một định dạng; tách được đọc dữ liệu, rule và người duyệt | Ai xác định quy tắc nghiệp vụ? Dữ liệu mẫu có đủ ngoại lệ? Công kiểm tra lại có làm mất lợi ích không? |
+  6              Tốn thời gian  Quản lý vùng   Quản lý vùng,  Phải so nhiều
+                                phải đọc báo   nhân viên vận  bảng và nhiều
+                                cáo từng cửa   hành           kỳ; bất thường
+                                hàng để phát                  nhỏ dễ bị bỏ
+                                hiện SKU hoặc                 qua
+                                chi nhánh có                  
+                                doanh số/tồn                  
+                                kho bất thường                
 
-### 2.2. Problem Cards chi tiết
+  7              Lặp lại        Khi thay đổi   Vận hành, quản Phải rà nhiều
+                                giá hoặc chạy  lý cửa hàng,   SKU/cửa hàng;
+                                khuyến mãi,    nhân viên bán  sai giá ảnh
+                                vận hành phải  hàng           hưởng trực
+                                kiểm tra nhiều                tiếp bán hàng
+                                cửa hàng đã                   
+                                cập nhật đúng                 
+                                hay chưa                      
 
-#### Problem Card #1 — Tra cứu ngữ cảnh trước khi trả lời ticket kỹ thuật
+  8              Pain từ người  Khi sản phẩm   Nhân viên bán  Tồn hệ thống
+                 khác           hết ở cửa hàng hàng, khách    có thể chưa đủ
+                                hiện tại, nhân hàng           để chắc hàng
+                                viên phải tra                 thực sự có thể
+                                cứu rồi liên                  bán/giữ cho
+                                hệ chi nhánh                  khách
+                                khác để xác                   
+                                nhận còn hàng                 
+                                cho khách                     
+  --------------------------------------------------------------------------
 
-**Problem 1 câu:**  
-Nhân viên hỗ trợ kỹ thuật phải tìm và đối chiếu thông tin ở nhiều nguồn trước khi trả lời khách hàng; case ClickUp ghi nhận khoảng 15 phút tra cứu cho mỗi ticket.
+### Nhận xét sau scan
 
-**Actor:**  
-Nhân viên technical support chịu trách nhiệm tìm đúng hướng dẫn và chuẩn bị phản hồi; khách hàng chờ câu trả lời, chuyên gia kỹ thuật tiếp nhận trường hợp khó.
+Các vấn đề nằm trong cùng một chuỗi vận hành:
 
-**Thời điểm / bối cảnh:**  
-Khi tiếp nhận ticket mới hoặc cần bổ sung ngữ cảnh. Nguồn ghi khoảng 5.000 ticket/tháng, không xác nhận một buổi xử lý cố định mỗi tuần.
-
-**Current workflow (bản nháp):**
-
-```text
-1. Đọc mô tả và xác định sản phẩm, phiên bản, triệu chứng.
-2. Lấy lịch sử trao đổi liên quan trong hệ thống hỗ trợ.
-3. Tìm tài liệu hướng dẫn và đối chiếu với tình huống của ticket.
-4. Ghi lại ngữ cảnh, bằng chứng và bước xử lý phù hợp.
-5. Kiểm tra thông tin để sẵn sàng soạn phản hồi.
+``` text
+[Bán hàng] → [Cập nhật doanh số/tồn kho] → [Phát hiện SKU sắp thiếu hoặc dư]
+→ [Kiểm tra tồn các chi nhánh] → [Quyết định bổ sung/điều chuyển]
+→ [Thực hiện điều chuyển] → [Đối soát tồn kho] → [Tổng hợp báo cáo]
 ```
 
-**Bottleneck:**  
-Bước 3 — tìm và đối chiếu tài liệu phù hợp. Đây là giả thuyết về bước nghẽn cần kiểm chứng; số 15 phút của nguồn là cả phần tra cứu, không phải riêng bước 3.
+Pain lặp lại nhiều nhất nằm quanh **tồn kho và điều chuyển giữa các cửa
+hàng**, nên Phase 2 ưu tiên các candidate trong cụm này.
 
-**Impact:**  
-Công tra cứu lặp lại ở mỗi ticket làm giảm thời gian dành cho xử lý chuyên sâu. Với quy mô hàng nghìn ticket/tháng của case, việc lặp lại này đáng xem xét; chưa có số đo riêng tại nhóm học viên.
+------------------------------------------------------------------------
 
-**Success metric:**  
-Mục tiêu đề xuất: giảm ít nhất 30% thời gian từ mở ticket đến có ngữ cảnh đã kiểm tra, trên cùng bộ 20 ticket thử nghiệm. Đo baseline của bộ thử trước; nếu baseline thực đo là 15 phút thì mục tiêu tương ứng là không quá 10,5 phút. Mỗi gợi ý phải có nguồn truy xuất được; ghi thêm số dẫn chứng sai và thời gian sửa. Không lấy kết quả của doanh nghiệp làm kết quả của nhóm.
+## Phase 2 --- Top 3 Problem Cards
 
-**Non-AI alternative:**  
-Chuẩn hóa kho tài liệu, gắn nhãn theo sản phẩm/phiên bản, tìm kiếm từ khóa và dùng checklist tra cứu. Cần thử cách này để biết liệu vấn đề chỉ do tài liệu tổ chức kém.
+## Top 3
 
-**AI hypothesis:**  
-AI đọc ticket, tìm trong bộ tài liệu được phép và tạo bản tóm tắt kèm dẫn chứng; nhân viên kiểm tra trước khi dùng. Không tự gửi phản hồi hoặc thao tác trên tài khoản khách hàng.
+  -----------------------------------------------------------------------
+  Rank              Problem           Vì sao chọn       Điều còn chưa
+                                                        chắc
+  ----------------- ----------------- ----------------- -----------------
+  1                 Điều chuyển hàng  Actor/workflow    Tồn hệ thống có
+                    giữa các cửa hàng rõ; nhiều bước    real-time không;
+                    khi một chi nhánh thủ công; impact  chưa có baseline
+                    sắp thiếu hàng    đo được bằng thời thật; cần safety
+                                      gian xử lý, số    stock cho cửa
+                                      lần liên hệ và    hàng nguồn
+                                      chất lượng điều   
+                                      chuyển            
 
-**Quick gut:**  
-Workflow — các bước truy xuất, tổng hợp và kiểm tra đã rõ; chưa có bằng chứng cần Agent tự lập kế hoạch.
+  2                 Đề xuất lượng bổ  Cùng domain;      Mùa vụ/promotion
+                    sung tồn kho cho  input rõ như      làm nhu cầu biến
+                    từng cửa hàng     sales history,    động; thiếu lịch
+                                      tồn, tốc độ bán,  sử sẽ làm dự báo
+                                      promotion; so     yếu
+                                      được Rule với     
+                                      forecasting/AI    
 
-**Nguồn số liệu:** [Zapier — ClickUp](https://zapier.com/customer-stories/clickup). Tương ứng vấn đề #2 trong Phase 1; xem thêm [ghi chú nghiên cứu](01-individual-problem-scan-research-notes.md).
+  3                 Phát hiện và tìm  Workflow lặp lại; Nguyên nhân đa
+                    nguyên nhân chênh bottleneck rõ ở   dạng; cần
+                    lệch tồn kho      bước lần giao     transaction data
+                                      dịch; output kiểm và ground truth
+                                      chứng được        
+  -----------------------------------------------------------------------
 
-##### Draft current workflow
+## Problem Card #1 --- Điều chuyển hàng giữa các cửa hàng khi một chi nhánh sắp thiếu hàng
 
-```text
-CURRENT STATE — khoảng 15 phút/ticket cho phần tra cứu (nguồn ClickUp)
+**Problem 1 câu:**\
+Khi một cửa hàng sắp hết một SKU nhưng các cửa hàng khác vẫn còn hàng,
+nhân viên vận hành mất thời gian kiểm tra nhiều chi nhánh, cân nhắc nhu
+cầu của cả cửa hàng nguồn và cửa hàng nhận rồi mới quyết định điều
+chuyển từ đâu và bao nhiêu.
 
-[Đọc ticket]
-→ [Lấy lịch sử]
-→ [Tìm + đối chiếu tài liệu]  <-- bottleneck dự kiến
-→ [Ghi ngữ cảnh và hướng xử lý]
-→ [Nhân viên kiểm tra]
+**Actor:**\
+Nhân viên vận hành chuỗi ra đề xuất; quản lý cửa hàng nguồn và cửa hàng
+nhận xác nhận; khách hàng chịu ảnh hưởng nếu cửa hàng thiếu hàng.
 
-Nguồn không tách thời gian từng bước.
+**Thời điểm / bối cảnh:**\
+Khi tồn một SKU tại cửa hàng giảm xuống mức thấp hoặc nhu cầu dự kiến
+vượt lượng tồn trong vài ngày tới.
+
+**Current workflow:**
+
+``` text
+1. Phát hiện SKU tại cửa hàng A sắp thiếu.
+2. Mở báo cáo tồn kho các cửa hàng.
+3. Kiểm tra B/C/D... còn bao nhiêu.
+4. Xem tốc độ bán của cửa hàng nguồn.
+5. So khoảng cách/thời gian điều chuyển.
+6. Liên hệ cửa hàng nguồn xác nhận hàng thực tế.
+7. Chọn nguồn + số lượng và tạo yêu cầu điều chuyển.
 ```
 
-##### Draft future workflow
+**Bottleneck:**\
+Bước 3--5: phải tự so sánh nhiều cửa hàng và cân bằng tồn hiện tại, tốc
+độ bán, khoảng cách và nhu cầu của cửa hàng nhận. Chọn nơi "còn nhiều
+nhất" chưa chắc đúng vì có thể khiến cửa hàng nguồn thiếu hàng sau đó.
 
-```text
-FUTURE STATE — mục tiêu pilot: không quá 70% baseline thực đo
+**Impact:**\
+Baseline giả định 15--20 phút/yêu cầu. Nếu có 5 yêu cầu/ngày, riêng việc
+tìm nguồn và quyết định có thể tốn khoảng 75--100 phút/ngày.
 
-[Nhận ticket và kiểm tra phạm vi — Rule]
-→ [Truy xuất bộ tài liệu được phép — hệ thống]
-→ [Tóm tắt ngữ cảnh + dẫn chứng — AI]
-→ [Nhân viên kiểm tra/sửa — human boundary]
-→ [Bàn giao ngữ cảnh đã duyệt để soạn phản hồi]
+**Success metric:**\
+Giảm thời gian từ lúc phát hiện thiếu hàng đến lúc có đề xuất từ 15--20
+phút xuống dưới 5 phút/case; giảm số cửa hàng phải liên hệ; không tăng
+số trường hợp cửa hàng nguồn xuống dưới safety stock sau điều chuyển.
 
-Fallback: thiếu nguồn, nguồn mâu thuẫn hoặc gợi ý sai
-→ nhân viên tra cứu thủ công; không tự gửi câu trả lời.
+**Non-AI alternative:**\
+Rule cố định: chỉ lấy từ cửa hàng có tồn sau điều chuyển lớn hơn safety
+stock, ưu tiên cửa hàng gần và giới hạn số lượng theo min/max stock. Đây
+là baseline phải thử trước AI.
 
-Đo cả thời gian chờ, kiểm tra và sửa; chưa có kết quả pilot.
+**AI hypothesis:**\
+Workflow tự lấy tồn kho, tốc độ bán và khoảng cách; Rule loại nguồn
+không an toàn; AI/thuật toán ranking hỗ trợ xếp hạng khi nhiều nguồn đều
+hợp lệ. Nhân viên vẫn review trước khi tạo yêu cầu.
+
+**Quick gut:**\
+Workflow.
+
+### Draft current workflow
+
+``` text
+CURRENT STATE — baseline giả định 15–20 phút/case
+
+[1 Phát hiện thiếu: 1']
+→ [2 Mở tồn chuỗi: 2']
+→ [3 Kiểm tra từng cửa hàng: 5']       <-- bottleneck
+→ [4 So tốc độ bán/tồn an toàn: 4']    <-- bottleneck
+→ [5 So khoảng cách: 2']
+→ [6 Liên hệ xác nhận: 4']
+→ [7 Tạo yêu cầu: 2']
 ```
 
----
+### Draft future workflow
 
-#### Problem Card #2 — Chạy kiểm thử hồi quy thủ công
+``` text
+FUTURE STATE — target dưới 5 phút/case
 
-**Problem 1 câu:**  
-QA phải thực hiện lại nhiều test case để xác nhận chức năng cũ sau thay đổi; case SafelyYou có khoảng 362 test case và mất một tuần để chạy một bộ regression thủ công.
+[1 Auto-detect SKU thiếu]                 -- Rule
+→ [2 Pull tồn + sales rate + khoảng cách] -- Workflow
+→ [3 Loại nguồn dưới safety stock]        -- Rule
+→ [4 Rank nguồn + số lượng]               -- Workflow/AI support
+→ [5 Nhân viên review + xác nhận: 2–3']   -- Human boundary
+→ [6 Tạo yêu cầu điều chuyển]
 
-**Actor:**  
-QA phụ trách kiểm tra bản build; developer nhận và sửa lỗi; người phụ trách release quyết định phát hành.
-
-**Thời điểm / bối cảnh:**  
-Trước khi xác nhận bản phát hành hoặc sau thay đổi cần chạy lại bộ regression. Nguồn đề cập nhịp regression hằng tuần sau tự động hóa, không khẳng định thời gian chạy thủ công một tuần là lịch release hằng tuần.
-
-**Current workflow (bản nháp):**
-
-```text
-1. Nhận bản build và danh sách thay đổi.
-2. Chọn bộ test cùng kết quả mong đợi.
-3. Chuẩn bị môi trường và dữ liệu test.
-4. Thực hiện từng test case, lưu kết quả thực tế.
-5. Xác minh ca thất bại và ghi lỗi cho developer.
-6. Chạy lại ca liên quan sau sửa, bàn giao kết quả kiểm thử.
+Fallback:
+Dữ liệu tồn cũ/mâu thuẫn, không có nguồn an toàn hoặc confidence thấp
+→ kiểm tra và gọi xác nhận thủ công.
 ```
 
-**Bottleneck:**  
-Bước 4 — thao tác lặp lại để thực thi từng ca. Cần phân biệt với công chuẩn bị, phân tích lỗi và bảo trì script; nguồn nêu bảo trì Selenium cũng gây khó khăn, nhưng không tách thời gian từng việc.
+## Problem Card #2 --- Đề xuất lượng bổ sung tồn kho cho từng cửa hàng
 
-**Impact:**  
-Một lượt regression kéo dài làm chậm phản hồi về chất lượng bản build. Nếu thiếu thời gian, nhóm có thể khó kiểm tra đủ bộ ca đã xác định. Chưa quy đổi một tuần thành giờ công vì nguồn không nêu số người hay số giờ làm.
+**Problem 1 câu:**\
+Nhân viên vận hành khó xác định mỗi cửa hàng nên được bổ sung bao nhiêu
+đơn vị cho từng SKU vì nhu cầu khác nhau theo vị trí, tốc độ bán, ngày
+trong tuần và chương trình khuyến mãi.
 
-**Success metric:**  
-Mục tiêu đề xuất: giảm ít nhất 30% tổng giờ công QA khi chạy cùng 10–20 test case trên ứng dụng demo, phát hiện đầy đủ lỗi đã cài sẵn và không tự thay đổi tiêu chí pass. Đo riêng thời gian máy chạy, công kiểm tra lỗi và công bảo trì. Baseline của bộ pilot phải đo mới; không áp một tuần của 362 ca cho 10–20 ca.
+**Actor:**\
+Nhân viên vận hành/merchandise planner lập kế hoạch; quản lý cửa hàng
+nhận hàng; kho trung tâm chuẩn bị hàng.
 
-**Non-AI alternative:**  
-Chuẩn hóa checklist và dữ liệu, ưu tiên regression theo rủi ro; viết script với assertion cố định cho luồng ổn định. Đây là phương án cần đánh giá trước khi dùng AI.
+**Thời điểm / bối cảnh:**\
+Theo chu kỳ bổ sung hàng hằng ngày/vài lần mỗi tuần và trước promotion.
 
-**AI hypothesis:**  
-AI hỗ trợ bản nháp test hoặc phân tích log, nhưng QA kiểm tra kết quả mong đợi và bằng chứng lỗi. Không cho AI sửa assertion để làm test pass hoặc tự phê duyệt release.
+**Current workflow:**
 
-**Quick gut:**  
-Rule — ưu tiên script/assertion rõ cho phạm vi nhỏ và ổn định. Workflow điều phối có thể bổ sung; chưa cần Agent khám phá tự do.
-
-**Nguồn số liệu:** [testRigor — SafelyYou](https://testrigor.com/case-study-safelyyou/). Tương ứng vấn đề #1 trong Phase 1; xem thêm [ghi chú nghiên cứu](01-individual-problem-scan-research-notes.md).
-
-##### Draft current workflow
-
-```text
-CURRENT STATE — một tuần/bộ regression trong case SafelyYou
-
-[Nhận build]
-→ [Chọn test + expected result]
-→ [Chuẩn bị môi trường/dữ liệu]
-→ [QA thực thi từng ca]  <-- bottleneck dự kiến
-→ [Xác minh và ghi lỗi]
-→ [Kiểm tra lại + bàn giao]
-
-Khoảng 362 test case trong nguồn; chưa có giờ công từng bước.
+``` text
+1. Xuất tồn hiện tại.
+2. Xem doanh số lịch sử.
+3. Kiểm tra promotion.
+4. Ước lượng nhu cầu từng SKU/cửa hàng.
+5. So với tồn và hàng đang về.
+6. Chỉnh số lượng theo kinh nghiệm.
+7. Gửi kế hoạch bổ sung.
 ```
 
-##### Draft future workflow
+**Bottleneck:**\
+Bước 4--6: phải biến nhiều tín hiệu thành số lượng replenishment cụ thể.
+Rule cố định có thể không phù hợp cho SKU bán nhanh, mùa vụ hoặc cửa
+hàng có hành vi khách khác nhau.
 
-```text
-FUTURE STATE — mục tiêu pilot: giảm ít nhất 30% giờ công QA
+**Impact:**\
+Bổ sung thiếu gây stockout; bổ sung quá nhiều làm tăng tồn và điều
+chuyển ngược. Chưa có dữ liệu thật để lượng hóa.
 
-[QA duyệt test + expected result]
-→ [Chuẩn bị môi trường demo — script]
-→ [Chạy test với assertion cố định — Rule]
-→ [Tập hợp log và kết quả — hệ thống]
-→ [QA xác minh lỗi — human boundary]
-→ [Bàn giao để người phụ trách quyết định release]
+**Success metric:**\
+So trên một nhóm SKU: tỷ lệ stockout, số ngày tồn kho, tồn cuối kỳ và số
+lần điều chuyển khẩn cấp. Mục tiêu là giảm stockout mà không làm tồn
+bình quân tăng quá baseline.
 
-Fallback: test không ổn định hoặc kết quả không rõ
-→ QA chạy lại thủ công; không tự bỏ qua lỗi.
+**Non-AI alternative:**\
+Min/max inventory, reorder point và moving average theo SKU/cửa hàng.
 
-Pilot chỉ 10–20 ca; đo baseline riêng, chưa có thời gian sau thực đo.
+**AI hypothesis:**\
+Forecast nhu cầu ngắn hạn từ sales history, tồn, ngày trong tuần và
+promotion; Workflow chuyển forecast thành đề xuất có constraint; người
+vận hành review.
+
+**Quick gut:**\
+Workflow.
+
+### Draft current workflow
+
+``` text
+CURRENT STATE
+
+[Xuất tồn] → [Xem sales history] → [Xem promotion]
+→ [Ước lượng nhu cầu]  <-- bottleneck
+→ [Tính lượng bổ sung] → [Chỉnh theo kinh nghiệm] → [Gửi kế hoạch]
 ```
 
----
+### Draft future workflow
 
-#### Problem Card #3 — Kiểm tra hóa đơn đính kèm với đơn mua hàng
+``` text
+FUTURE STATE
 
-**Problem 1 câu:**  
-Nhân viên kế toán phải đọc hóa đơn và đối chiếu với đơn mua hàng bằng tay; case CATRION ghi nhận ít nhất 3 phút kiểm tra mỗi hóa đơn đính kèm.
+[Pull sales + inventory + promotion]
+→ [Rule kiểm tra dữ liệu]
+→ [Forecast nhu cầu theo SKU/cửa hàng]
+→ [Rule tính replenishment + min/max]
+→ [Nhân viên review ngoại lệ]  -- Human boundary
+→ [Gửi kế hoạch]
 
-**Actor:**  
-Nhân viên kế toán phải trả kiểm tra chứng từ; người mua hàng giải thích chênh lệch; người có thẩm quyền duyệt thanh toán.
-
-**Thời điểm / bối cảnh:**  
-Mỗi khi nhận hóa đơn PDF hoặc ảnh scan cần xác minh trước khi chuyển xử lý. Nguồn chưa nêu khối lượng hóa đơn hoặc lịch gom xử lý hằng tuần.
-
-**Current workflow (bản nháp):**
-
-```text
-1. Nhận hóa đơn và kiểm tra đủ trang, khả năng đọc.
-2. Đọc các trường cần đối chiếu trên hóa đơn.
-3. Tìm đơn mua hàng tương ứng.
-4. So mã hàng, số lượng, số tiền và các trường theo quy tắc đã thống nhất.
-5. Ghi điểm lệch hoặc thông tin chưa rõ.
-6. Chuyển kết quả cho người kiểm tra/duyệt tiếp.
+Fallback:
+SKU mới/dữ liệu ít/promotion bất thường
+→ dùng min/max + moving average và người vận hành quyết định.
 ```
 
-**Bottleneck:**  
-Bước 4 — đối chiếu dữ liệu giữa chứng từ là điểm nghẽn dự kiến; đọc dữ liệu ở bước 2 cũng có thể tốn công. Cần đo để phân biệt hai phần. Ít nhất 3 phút là thời gian kiểm tra hóa đơn theo nguồn, không phải số đo riêng bước 4.
+## Problem Card #3 --- Phát hiện và tìm nguyên nhân chênh lệch tồn kho
 
-**Impact:**  
-Công kiểm tra lặp lại theo số chứng từ; sai sót có thể dẫn đến phải kiểm tra và bổ sung lại. Chưa có đủ dữ liệu để tính tổng giờ mỗi tuần hoặc tỷ lệ sai trong bối cảnh học viên.
+**Problem 1 câu:**\
+Khi tồn thực tế khác tồn trên hệ thống, nhân viên phải lần nhiều giao
+dịch bán, nhập, trả và điều chuyển để tìm nguyên nhân.
 
-**Success metric:**  
-Mục tiêu đề xuất: giảm ít nhất 30% tổng thời gian kiểm tra trên 10–20 cặp hóa đơn/đơn mua giả lập cùng định dạng, phát hiện đầy đủ sai lệch đã cài sẵn. Đo baseline mới; nếu thực đo là 3 phút thì mục tiêu tương ứng không quá 2,1 phút, gồm công người kiểm tra và sửa. Theo dõi lỗi trích trường, lỗi đối chiếu và ngoại lệ riêng.
+**Actor:**\
+Nhân viên kho/cửa hàng kiểm kê; quản lý cửa hàng và vận hành xử lý chênh
+lệch.
 
-**Non-AI alternative:**  
-Yêu cầu mẫu hóa đơn thống nhất, dùng dữ liệu có cấu trúc và công thức kiểm tra mã đơn/số tiền/bản trùng. Nếu nhận được dữ liệu chuẩn, có thể không cần AI đọc chứng từ.
+**Thời điểm / bối cảnh:**\
+Sau kiểm kê định kỳ hoặc khi phát hiện tồn hệ thống không khớp thực tế.
 
-**AI hypothesis:**  
-AI/OCR trích dữ liệu từ PDF hoặc ảnh; rule đối chiếu với đơn mua; kế toán xem dữ liệu gốc và duyệt điểm lệch. Không tự sửa chứng từ hoặc phê duyệt thanh toán.
+**Current workflow:**
 
-**Quick gut:**  
-Workflow — chuỗi đọc dữ liệu, kiểm tra theo luật và người duyệt khá rõ; chưa cần Agent tự chọn hành động.
-
-**Nguồn số liệu:** [Microsoft — CATRION](https://www.microsoft.com/en/customers/story/24577-catrion-microsoft-power-platform). Tương ứng vấn đề #5 trong Phase 1; xem thêm [ghi chú nghiên cứu](01-individual-problem-scan-research-notes.md).
-
-##### Draft current workflow
-
-```text
-CURRENT STATE — ít nhất 3 phút/hóa đơn đính kèm (nguồn CATRION)
-
-[Nhận chứng từ]
-→ [Đọc các trường]
-→ [Tìm đơn mua]
-→ [Đối chiếu dữ liệu]  <-- bottleneck dự kiến
-→ [Ghi điểm lệch]
-→ [Chuyển kiểm tra/duyệt]
-
-Không có thời gian từng bước; cần kiểm chứng bước nghẽn.
+``` text
+1. Ghi nhận kiểm kê thực tế.
+2. So với tồn hệ thống.
+3. Xác định SKU bị lệch.
+4. Lấy lịch sử bán/nhập/trả/điều chuyển.
+5. Đọc từng giao dịch để tìm bất thường.
+6. Liên hệ nếu thiếu chứng từ.
+7. Xác nhận nguyên nhân và xử lý.
 ```
 
-##### Draft future workflow
+**Bottleneck:**\
+Bước 4--6: phải tự nối timeline từ nhiều loại giao dịch. Case qua nhiều
+lần transfer/return dễ kéo dài.
 
-```text
-FUTURE STATE — mục tiêu pilot: không quá 70% baseline thực đo
+**Impact:**\
+Baseline giả định 20--30 phút/case. Chậm xử lý làm tồn kho kém tin cậy
+và ảnh hưởng tiếp tới bán hàng, replenishment và transfer.
 
-[Nhận hóa đơn + đơn mua]
-→ [Trích trường kèm vị trí trên chứng từ — AI/OCR]
-→ [Kiểm tra + đối chiếu — Rule]
-→ [Kế toán xem dữ liệu gốc và sửa — human boundary]
-→ [Xuất bảng kết quả kiểm tra]
+**Success metric:**\
+Giảm thời gian điều tra/case; giảm số giao dịch phải đọc; đo tỷ lệ
+nguyên nhân đúng xuất hiện trong top 3 gợi ý. Không tự điều chỉnh tồn
+nếu chưa có người xác nhận.
 
-Fallback: ảnh mờ, thiếu trang hoặc dữ liệu mâu thuẫn
-→ giữ trạng thái chưa xác minh và chuyển kiểm tra thủ công.
-Không tự duyệt hoặc thực hiện thanh toán; chưa có kết quả pilot.
+**Non-AI alternative:**\
+Rule reconciliation theo transaction ID; cảnh báo duplicate, transfer
+chưa nhận, return chưa hoàn tất hoặc giao dịch thiếu cặp.
+
+**AI hypothesis:**\
+Rule xử lý pattern rõ; AI tóm tắt timeline và xếp hạng nguyên nhân ở
+case còn lại. Nhân viên xem chứng từ gốc trước khi xác nhận.
+
+**Quick gut:**\
+Workflow.
+
+### Draft current workflow
+
+``` text
+CURRENT STATE — baseline giả định 20–30 phút/case
+
+[Kiểm kê] → [So system stock] → [Xác định SKU lệch]
+→ [Lấy transaction history] → [Đọc/lần timeline]  <-- bottleneck
+→ [Liên hệ xác minh] → [Xác nhận nguyên nhân]
 ```
 
----
+### Draft future workflow
 
-### 2.3. Card muốn pitch nhất (chuẩn bị 2 phút)
+``` text
+FUTURE STATE
 
-**Card đề xuất để pitch:**  
-Card #1 — Tra cứu ngữ cảnh trước khi trả lời ticket kỹ thuật.
+[Physical count + system stock]
+→ [Rule phát hiện mismatch]
+→ [Rule kiểm duplicate/missing transfer/return]
+→ [AI tóm tắt timeline + rank nguyên nhân]
+→ [Nhân viên xem chứng từ và xác nhận]  -- Human boundary
+→ [Xử lý]
 
-**Vì sao (gợi ý để học viên xem lại):**  
-Vấn đề có actor cụ thể và số đo thời gian tra cứu theo ticket. Phạm vi có thể thu hẹp vào việc chuẩn bị ngữ cảnh từ một bộ tài liệu, với nhân viên kiểm tra trước khi phản hồi. Cách làm này cho phép so sánh tìm kiếm từ khóa với Workflow có AI mà chưa cần tự động giải quyết toàn bộ ticket.
+Fallback:
+Thiếu transaction/chứng từ hoặc AI không có bằng chứng
+→ giữ trạng thái chưa xác minh và điều tra thủ công.
+```
+
+## Card muốn pitch nhất
+
+**Card đề xuất để pitch:**\
+Card #1 --- Điều chuyển hàng giữa các cửa hàng khi một chi nhánh sắp
+thiếu hàng.
+
+**Vì sao:**\
+Problem có actor cụ thể, workflow lặp lại và bottleneck rõ ở bước chọn
+cửa hàng nguồn + số lượng. Metric trước/sau dễ đo bằng thời gian xử lý,
+số lần liên hệ và khả năng giữ safety stock cho cửa hàng nguồn. Bài toán
+cũng cho phép so Rule/Workflow/Agent rõ: Rule xử lý constraint cứng,
+Workflow tổng hợp dữ liệu và ranking; chưa cần Agent.
 
 **Câu hỏi đề xuất để nhóm challenge:**
 
-1. Nếu chuẩn hóa kho tài liệu và tìm theo từ khóa đã đủ, AI còn giảm được phần công nào?
-2. Nhóm lấy bộ ticket và đáp án tham chiếu ở đâu để đo cả tốc độ lẫn độ đúng, tránh chỉ tạo ra bản tóm tắt nghe hợp lý?
+1.  Nếu `safety stock + cửa hàng gần nhất` đã giải được phần lớn case,
+    AI còn tạo giá trị gì?
+2.  Tồn kho có đủ real-time hay vẫn phải gọi cửa hàng xác nhận?
+3.  Nếu cửa hàng B đang dư nhưng tốc độ bán cũng tăng nhanh, làm sao
+    tránh chuyển sang A rồi khiến B thiếu?
+4.  Nên tối ưu thời gian ra quyết định hay tỷ lệ stockout toàn chuỗi?
 
-> Đây là lựa chọn và câu hỏi do AI đề xuất theo yêu cầu soạn bài, chưa phải lời trình bày hoặc ý kiến đã được học viên xác nhận. Khi pitch, học viên tự diễn đạt theo hiểu biết của mình.
-
-**AI phản biện Card:**
-- Điểm yếu đã chỉ ra: dễ nhầm thời gian cả tác vụ với thời gian một bước; chưa có baseline pilot, người xác minh và quyền dùng dữ liệu; có thể chọn AI trước khi thử cách đơn giản.
-- Nội dung đã chỉnh trong bản nháp: ghi bottleneck là giả thuyết; giữ nguyên đơn vị/phạm vi nguồn; dùng mục tiêu có điều kiện dựa trên baseline đo mới; thêm non-AI alternative, điểm người kiểm tra và fallback.
-- Phần học viên cần xác nhận: top 3, card muốn pitch và mức độ hiểu/tiếp cận người dùng của từng vấn đề.
+**AI phản biện Card:** - Baseline 15--20 phút/case và 5 case/ngày hiện
+là **giả định scenario**, không phải evidence thật. - Trước AI phải
+benchmark với `safety stock + distance + sales rate`. - Data freshness
+là dependency quan trọng. - Human boundary nằm trước lúc tạo lệnh điều
+chuyển; không tự chuyển nếu dữ liệu mâu thuẫn.
 
 ### Self-check nộp phần 01
 
-- [x] Phase 1 có 8 vấn đề, đúng 5 cột của bảng mẫu, mỗi dòng có actor và bằng chứng kèm nguồn.
-- [x] Phase 1 chỉ mô tả vấn đề/hiện trạng, không đưa kết quả cải tiến hoặc phương án triển khai.
-- [x] Top 3 truy ngược được về các dòng #2, #1, #5 trong Phase 1.
-- [x] Cả 3 card đủ field; current workflow có 3–7 bước.
-- [x] Mỗi card có workflow trước/sau, bottleneck, metric, non-AI alternative, human boundary và fallback.
-- [x] Số liệu nguồn, baseline cần đo và mục tiêu đề xuất được phân biệt.
-- [x] Có đề xuất card pitch và câu hỏi challenge.
-- [ ] Học viên xác nhận lựa chọn, tự chuẩn bị pitch và đối chiếu với trải nghiệm/người dùng thật.
-- [ ] Đo baseline pilot và kiểm chứng các giả thuyết trước khi chốt bài nhóm.
+-   [x] Phase 1 có 8 vấn đề trong **một bối cảnh thống nhất: vận hành
+    chuỗi cửa hàng bán lẻ**.
+-   [x] Có nhiều lăng kính và mỗi problem có actor/dấu hiệu.
+-   [x] Số liệu giả định được ghi rõ, không giả thành evidence thật.
+-   [x] Top 3 truy ngược trực tiếp về Phase 1 và cùng cụm
+    inventory/retail operations.
+-   [x] Cả 3 card có actor, workflow, bottleneck, impact, metric, non-AI
+    alternative và AI hypothesis.
+-   [x] Có before/after workflow, human boundary và fallback.
+-   [x] Không bắt đầu bằng chatbot/agent; Rule và non-AI alternative
+    được xét trước.
+-   [ ] Cần thay baseline giả định bằng quan sát/interview/log thật nếu
+    dùng để ra quyết định triển khai.
