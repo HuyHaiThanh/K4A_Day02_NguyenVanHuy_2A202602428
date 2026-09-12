@@ -155,7 +155,7 @@ Agent chưa cần thiết; AI/ranking chỉ nên được thêm nếu determinis
 
 ### 5.1. Current workflow bản nhóm
 
-Dán workflow hoặc link file: `02-group-problem-workflow.png`
+Dán workflow hoặc link file: <https://github.com/HuyHaiThanh/K4A_Day02_NguyenVanHuy_2A202602428/blob/main/02-group-problem-statement/02-group-problem-workflow.png>
 
 ``` text
 [1 Kiểm tra pin - người lái]
